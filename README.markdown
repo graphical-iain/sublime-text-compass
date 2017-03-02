@@ -2,11 +2,16 @@ This Fork
 =========
 **Adds functionality for Mac users.**
 - Extended compiling: By providing an ADD_COMPILE_PATH key to your config file, the plugin with also compile any SASS/SCSS files at the additional path as well.
+- ADD_FILE_PATH should be a relative path to the config.rb that points to another SCSS directory with a config file to be built when this file is built.
+- Best use case: Global partials included by multiple projects. When you make a change to the global partial, compile all projects as well.
 
 Example:
 `add_compile_path = "../*"`
 
 This will compile any SASS in any folders one level up from where your config.rb file is.
+
+
+
 
 
 Compass Build System for Sublime Text
