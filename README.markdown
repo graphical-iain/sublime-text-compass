@@ -1,3 +1,9 @@
+This Fork
+=========
+**Adds functionality for Mac users.**
+- Extended compiling: By providing an ADD_COMPILE_PATH key to your config file, the plugin with also compile any SASS/SCSS files at the additional path as well.
+
+
 Compass Build System for Sublime Text
 =====================================
 
