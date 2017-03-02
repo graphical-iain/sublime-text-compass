@@ -18,6 +18,29 @@ while [ "$FILE_PATH" != "$PROJECT_PATH" ];
   do FILE_PATH=`dirname "$FILE_PATH"`;
 
   if [ `find "$FILE_PATH" -maxdepth 1 -name config.rb` ]; then
+
+    # Check if there's an additional compile path and compile
+    while IFS= read -r var
+    do
+      ADD_FILE_PATH=`expr "$var" : 'add_compile_path'`;
+      if (($ADD_FILE_PATH>"0")); then
+        # strip out declaration
+        ADD_FILE_PATH=${var#*=};
+        # strip out begining quote
+        ADD_FILE_PATH=${ADD_FILE_PATH#*[\"]};
+        # strip out ending quote
+        ADD_FILE_PATH=${ADD_FILE_PATH%*[\"]};
+        # prepend the file_path
+        ADD_FILE_PATH="$FILE_PATH/$ADD_FILE_PATH/";
+        for i in $ADD_FILE_PATH
+        do
+          if [ `find "$i" -maxdepth 1 -name config.rb` ]; then
+            $COMPASS compile "$i" --boring;
+          fi;
+        done
+      fi;
+    done < "$FILE_PATH/config.rb"
+
     $COMPASS compile "$FILE_PATH" --boring;
     FOUND=1;
     break;
